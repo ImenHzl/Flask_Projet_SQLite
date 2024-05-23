@@ -102,8 +102,8 @@ def recherche():
 
 @app.route('/fiche_nom/', methods=['GET'])
 def recherche_par_nom():
-     if not est_authentifie_user():
-        return redirect(url_for('user_login'))
+     if not authentificationUser():
+        return redirect(url_for('authentificationUser'))
     
     name = request.args.get('name')
     if not name:
@@ -119,7 +119,7 @@ def recherche_par_nom():
     if customer is None:
         return 'Client non trouvé.', 404
 
-    return render_template('results.html', customer=customer)
+    return render_template('read_nom.html', customer=customer)
                                                                                                                                   
 if __name__ == "__main__":
   app.run(debug=True)
