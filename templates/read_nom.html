@@ -5,24 +5,12 @@
     <title>Clients</title>
 </head>
 <body>
-    <h1>Liste des Clients</h1>
-    <table>
-         <tr>
-            <th>ID</th>
-            <th>Création</th>
-            <th>Nom</th>
-            <th>Prénom</th>
-            <th>Adresse</th>
-        </tr>
-        {% for row in data %}
-        <tr>
-            <td>{{ row[0] }}</td>
-            <td>{{ row[1] }}</td>
-            <td>{{ row[2] }}</td>
-            <td>{{ row[3] }}</td>
-            <td>{{ row[4] }}</td>
-        </tr>
-        {% endfor %}
+    <h1> Client trouvé</h1>
+    <div>
+       <p> <label>Nom:</label>{{ customer['nom'] }}</p>
+       <p> <label>Prénom:</label>{{ customer['prenom'] }}</p>
+    <p> <label>Adresse:</label>{{ customer['adress'] }}</p>
+    </div>
     </table>
 </body>
 </html>
