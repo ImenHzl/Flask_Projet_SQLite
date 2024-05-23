@@ -11,6 +11,8 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'  # Clé secrète pour les sessions
 # Fonction pour créer une clé "authentifie" dans la session utilisateur
 def est_authentifie():
     return session.get('authentifie')
+def est_authentifieUser():
+    return session.get('authentifie')    
 
 @app.route('/')
 def hello_world():
@@ -29,7 +31,7 @@ def lecture():
 def authentification():
     if request.method == 'POST':
         # Vérifier les identifiants
-        if request.form['username'] == 'user' and request.form['password'] == '12345': # password à cacher par la suite
+        if request.form['username'] == 'admin' and request.form['password'] == 'password': # password à cacher par la suite
             session['authentifie'] = True
             # Rediriger vers la route lecture après une authentification réussie
             return redirect(url_for('lecture'))
@@ -38,6 +40,21 @@ def authentification():
             return render_template('formulaire_authentification.html', error=True)
 
     return render_template('formulaire_authentification.html', error=False)
+
+@app.route('/authentificationUser', methods=['GET', 'POST'])
+def authentificationUser():
+    if request.method == 'POST':
+        # Vérifier les identifiants
+        if request.form['username'] == 'user' and request.form['password'] == '12345': # password à cacher par la suite
+            session['authentifie'] = True
+            # Rediriger vers la route lecture après une authentification réussie
+            return redirect(url_for('recherche'))
+        else:
+            # Afficher un message d'erreur si les identifiants sont incorrects
+            return render_template('formulaire_authentification.html', error=True)
+
+    return render_template('formulaire_authentification.html', error=False)
+
 
 @app.route('/fiche_client/<int:post_id>')
 def Readfiche(post_id):
@@ -62,6 +79,10 @@ def ReadBDD():
 def formulaire_client():
     return render_template('formulaire.html')  # afficher le formulaire
 
+@app.route('/recherche', methods=['GET'])
+def formulaire_client():
+    return render_template('recherche.html')  # afficher le formulaire
+
 @app.route('/enregistrer_client', methods=['POST'])
 def enregistrer_client():
     nom = request.form['nom']
@@ -79,7 +100,7 @@ def enregistrer_client():
 
 @app.route('/fiche_nom/<string:nom>')
 def Nomfiche(nom):
-    if not est_authentifie():
+    if not est_authentifieUser():
         # Rediriger vers la page d'authentification si l'utilisateur n'est pas authentifié
         return redirect(url_for('authentification'))
     conn = sqlite3.connect('database.db')
