@@ -51,7 +51,7 @@ def authentificationUser():
             return redirect(url_for('recherche'))
         else:
             # Afficher un message d'erreur si les identifiants sont incorrects
-            return render_template('formulaire_authentification.html', error=True)
+            return render_template('formulaire_authentificationUser.html', error=True)
 
     return render_template('formulaire_authentification.html', error=False)
 
