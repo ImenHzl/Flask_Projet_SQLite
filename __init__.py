@@ -100,16 +100,24 @@ def recherche():
         return redirect(url_for('authentificationUser'))
     return render_template('recherche.html')
 
-@app.route('/fiche_nom/<nom_client>')
-def recherche_par_nom(nom_client):
+@app.route('/fiche_nom/<nom_client>', methods=['GET'])
+def recherche_par_nom():
     if not authentificationUser():
         return redirect(url_for('authentificationUser'))
+    name = request.args.get('name')
+    if not name:
+        return 'Veuillez fournir un nom de client pour la recherche.', 400
+
     conn = sqlite3.connect('database.db')
+    conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
-    cursor.execute('SELECT * FROM clients WHERE nom LIKE ?', ('%' + nom_client + '%',))
-    data = cursor.fetchall()
+    cursor.execute('SELECT * FROM clients WHERE nom = ?', (name,))
+    customer = cursor.fetchone()
     conn.close()
-    return render_template('read_data.html', data=data)
+
+    if customer is None:
+        return 'Client non trouvé.', 404
+    return render_template('read_data.html', customer=customer)
                                                                                                                                   
 if __name__ == "__main__":
   app.run(debug=True)
