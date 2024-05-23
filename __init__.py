@@ -106,7 +106,7 @@ def recherche_par_nom():
         return redirect(url_for('authentificationUser'))
     name = request.args.get('name')
     if not name:
-        return 'Veuillez fournir un nom de client pour la recherche.', 400
+        return 'Veuillez saisir un nom de client pour la recherche.', 400
 
     conn = sqlite3.connect('database.db')
     conn.row_factory = sqlite3.Row
