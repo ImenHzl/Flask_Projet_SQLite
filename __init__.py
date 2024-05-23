@@ -79,10 +79,6 @@ def ReadBDD():
 def formulaire_client():
     return render_template('formulaire.html')  # afficher le formulaire
 
-@app.route('/recherche', methods=['GET'])
-def recherche():
-    return render_template('recherche.html')  # afficher le formulaire
-
 @app.route('/enregistrer_client', methods=['POST'])
 def enregistrer_client():
     nom = request.form['nom']
@@ -98,18 +94,22 @@ def enregistrer_client():
     conn.close()
     return redirect('/consultation/')  # Rediriger vers la page d'accueil après l'enregistrement
 
-@app.route('/fiche_nom/<string:nom>')
-def Nomfiche(nom):
-    if not est_authentifieUser():
-        # Rediriger vers la page d'authentification si l'utilisateur n'est pas authentifié
+@app.route('/fiche_nom/')
+def recherche():
+    if not authentificationUser():
         return redirect(url_for('authentificationUser'))
-        conn = sqlite3.connect('database.db')
-        cursor = conn.cursor()
-        cursor.execute('SELECT * FROM clients WHERE nom = ?', (nom,))
-        data = cursor.fetchall()
-        conn.close()
-        # Rendre le template HTML et transmettre les données
-        return render_template('read_nom.html', data=data)
+    return render_template('recherche.html')
+
+@app.route('/fiche_nom/<nom_client>')
+def recherche_par_nom(nom_client):
+    if not authentificationUser():
+        return redirect(url_for('authentificationUser'))
+    conn = sqlite3.connect('database.db')
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM clients WHERE nom LIKE ?', ('%' + nom_client + '%',))
+    data = cursor.fetchall()
+    conn.close()
+    return render_template('read_data.html', data=data)
                                                                                                                                   
 if __name__ == "__main__":
   app.run(debug=True)
