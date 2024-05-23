@@ -53,7 +53,7 @@ def authentificationUser():
             # Afficher un message d'erreur si les identifiants sont incorrects
             return render_template('formulaire_authentificationUser.html', error=True)
 
-    return render_template('formulaire_authentificationUserUser.html', error=False)
+    return render_template('formulaire_authentificationUser.html', error=False)
 
 
 @app.route('/fiche_client/<int:post_id>')
