@@ -5,7 +5,7 @@
 </head>
 <body>
     <h1>Recherche de Client</h1>
-    <form action="{{ url_for('search_by_name') }}" method="get">
+    <form action="{{ url_for('recherche_par_nom') }}" method="get">
         <label for="name">Nom du client :</label>
         <input type="text" id="name" name="name" required>
         <button type="submit">Rechercher</button>
