@@ -94,7 +94,7 @@ def enregistrer_client():
     conn.close()
     return redirect('/consultation/')  # Rediriger vers la page d'accueil après l'enregistrement
 
-@app.route('/fiche_nom/')
+@app.route('/recherche')
 def recherche():
     if not authentificationUser():
         return redirect(url_for('authentificationUser'))
@@ -102,11 +102,12 @@ def recherche():
 
 @app.route('/fiche_nom/', methods=['GET'])
 def recherche_par_nom():
-    if not authentificationUser():
-        return redirect(url_for('authentificationUser'))
+     if not est_authentifie_user():
+        return redirect(url_for('user_login'))
+    
     name = request.args.get('name')
     if not name:
-        return 'Veuillez saisir un nom de client pour la recherche.', 400
+        return 'Veuillez fournir un nom de client pour la recherche.', 400
 
     conn = sqlite3.connect('database.db')
     conn.row_factory = sqlite3.Row
@@ -117,7 +118,8 @@ def recherche_par_nom():
 
     if customer is None:
         return 'Client non trouvé.', 404
-    return render_template('read_nom.html', customer=customer)
+
+    return render_template('results.html', customer=customer)
                                                                                                                                   
 if __name__ == "__main__":
   app.run(debug=True)
