@@ -12,7 +12,7 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'  # Clé secrète pour les sessions
 def est_authentifie():
     return session.get('authentifie')
 def est_authentifieUser():
-    return session.get('authentifie')    
+    return session.get('Userauthentifie')    
 
 @app.route('/')
 def hello_world():
@@ -53,7 +53,7 @@ def authentificationUser():
             # Afficher un message d'erreur si les identifiants sont incorrects
             return render_template('formulaire_authentificationUser.html', error=True)
 
-    return render_template('formulaire_authentificationUser.html', error=False)
+    return render_template('formulaire_authentificationUserUser.html', error=False)
 
 
 @app.route('/fiche_client/<int:post_id>')
@@ -102,7 +102,7 @@ def enregistrer_client():
 def Nomfiche(nom):
     if not est_authentifieUser():
         # Rediriger vers la page d'authentification si l'utilisateur n'est pas authentifié
-        return redirect(url_for('authentification'))
+        return redirect(url_for('authentificationUser'))
         conn = sqlite3.connect('database.db')
         cursor = conn.cursor()
         cursor.execute('SELECT * FROM clients WHERE nom = ?', (nom,))
