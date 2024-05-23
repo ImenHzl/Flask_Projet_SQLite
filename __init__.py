@@ -100,7 +100,7 @@ def recherche():
         return redirect(url_for('authentificationUser'))
     return render_template('recherche.html')
 
-@app.route('/fiche_nom/<nom_client>', methods=['GET'])
+@app.route('/fiche_nom/', methods=['GET'])
 def recherche_par_nom():
     if not authentificationUser():
         return redirect(url_for('authentificationUser'))
