@@ -117,7 +117,7 @@ def recherche_par_nom():
 
     if customer is None:
         return 'Client non trouvé.', 404
-    return render_template('read_data.html', customer=customer)
+    return render_template('read_nom.html', customer=customer)
                                                                                                                                   
 if __name__ == "__main__":
   app.run(debug=True)
