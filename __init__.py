@@ -80,7 +80,7 @@ def formulaire_client():
     return render_template('formulaire.html')  # afficher le formulaire
 
 @app.route('/recherche', methods=['GET'])
-def formulaire_client():
+def recherche():
     return render_template('recherche.html')  # afficher le formulaire
 
 @app.route('/enregistrer_client', methods=['POST'])
